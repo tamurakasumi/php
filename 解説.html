@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リポジトリなどの解説</title>
+</head>
+<body>
+
+    <!-- ３−４：リモートリポジトリを変更しようの開設で以下はターミナルの記述 -->
+    Last login: Fri Dec 27 17:14:35 on ttys000
+    tamurakasumi@kasuminoMacBook-Air ~ % cs
+    zsh: command not found: cs
+    tamurakasumi@kasuminoMacBook-Air ~ % cd coachtech/php <!-- 間違い①：ターミナルを立ち上げてクローンなのに、coachtech/phpに移動してしまった！ -->
+    tamurakasumi@kasuminoMacBook-Air php % git clone git@github.com:coachtech-material/php.git <!-- 間違い②：coachtech/phpのなかでクローンした！ -->
+    Cloning into 'php'...  <!-- 以下は不要なクローン中 -->
+    remote: Enumerating objects: 9, done.
+    remote: Counting objects: 100% (9/9), done.
+    remote: Compressing objects: 100% (8/8), done.
+    remote: Total 9 (delta 0), reused 9 (delta 0), pack-reused 0 (from 0)
+    Receiving objects: 100% (9/9), done. <!-- 不要なクローン完了 -->
+    tamurakasumi@kasuminoMacBook-Air php % ls <!-- lsでディレクトリの中に何が入っているか確認 -->
+    README.md docker-compose.yml src
+    docker php
+    tamurakasumi@kasuminoMacBook-Air php % pwd <!-- ターミナル上の現在位置特定 -->
+    /Users/tamurakasumi/coachtech/php <!-- phpにいる -->
+    tamurakasumi@kasuminoMacBook-Air php % cd .. <!-- ..で一つ上のディレクトリに戻る。phpからcoachtechへ移動 -->
+    tamurakasumi@kasuminoMacBook-Air coachtech % ls <!-- coachtech内の中身確認 -->
+    Japan html-css php
+    PHP教材 oneline-server test
+    tamurakasumi@kasuminoMacBook-Air coachtech % cd php <!-- coachtechからphpへ移動 -->
+    tamurakasumi@kasuminoMacBook-Air php % ls <!-- phpの中身確認 -->
+    README.md docker-compose.yml src
+    docker php <!-- phpの中にクローンされたphpがいる -->
+    tamurakasumi@kasuminoMacBook-Air php % cd php <!-- phpのなかのクローンphpに移動 -->
+    tamurakasumi@kasuminoMacBook-Air php % ls <!-- 中身確認 -->
+    docker docker-compose.yml
+    tamurakasumi@kasuminoMacBook-Air php % cd ../.. <!-- cd ../..で２階層戻る。phpからphpからcoachtech -->
+    tamurakasumi@kasuminoMacBook-Air coachtech % ls <!-- 中身確認 -->
+    Japan html-css php
+    PHP教材 oneline-server test
+    tamurakasumi@kasuminoMacBook-Air coachtech % rm -fr php <!-- rm -fr クローンされたphp含む以下のファイル全部を消す強力なやつ。 -->
+    tamurakasumi@kasuminoMacBook-Air coachtech % git clone git@github.com:coachtech-material/php.git <!-- テキストに習ってcoachtech内でSSHのURLを使ってクローンを作る -->
+    Cloning into 'php'... <!-- 以下クローン中 -->
+    remote: Enumerating objects: 9, done.
+    remote: Counting objects: 100% (9/9), done.
+    remote: Compressing objects: 100% (8/8), done.
+    remote: Total 9 (delta 0), reused 9 (delta 0), pack-reused 0 (from 0)
+    Receiving objects: 100% (9/9), done. <!-- クローン完了 -->
+    tamurakasumi@kasuminoMacBook-Air coachtech % ls <!-- coachtech内の中身確認 -->
+    Japan html-css php
+    PHP教材 oneline-server test
+    tamurakasumi@kasuminoMacBook-Air coachtech % cd php <!-- phpに移動 -->
+    tamurakasumi@kasuminoMacBook-Air php % ls <!-- php内いを確認 -->
+    docker docker-compose.yml
+    tamurakasumi@kasuminoMacBook-Air php % git remote set-url origin git@github.com:tamurakasumi/php.git <!-- git remote set-url 変更前のリンク：クローンしたリンク -->
+    tamurakasumi@kasuminoMacBook-Air php % git remote -v <!-- git remote -vで現状リンクの確認 -->
+    origin git@github.com:tamurakasumi/php.git (fetch) <!-- output① --> <!-- originはリモートリポジトリのURL -->
+    origin git@github.com:tamurakasumi/php.git (push) <!-- output② -->
+    tamurakasumi@kasuminoMacBook-Air php % git status <!-- git statusで状況確認 -->
+    On branch main <!-- branchはmainです。 -->
+    Your branch is up to date with 'origin/main'. <!-- ブランチは 'origin/main' で最新です。 -->
+    
+    nothing to commit, working tree clean <!-- コミットするものはありません。作業ツリーはクリーンです。＝まっさらです。 -->
+    tamurakasumi@kasuminoMacBook-Air php % touch README <!-- touch 作成したいファイル名 で空ファイルが作れる。 -->
+    tamurakasumi@kasuminoMacBook-Air php % mv README README.md <!-- ファイルが指定したディレクトリに移動。移動先にファイル名が指定されているのでリネームになる。＝上書きになる。 -->
+    tamurakasumi@kasuminoMacBook-Air php % ls <!-- php名確認 -->
+    README.md docker docker-compose.yml <!-- README.mdが追加された -->
+    tamurakasumi@kasuminoMacBook-Air php % git status <!-- 状況確認 -->
+    On branch main
+    Your branch is up to date with 'origin/main'.
+    
+    Untracked files: <!-- 追跡されていないファイル: -->
+    (use "git add <file>..." to include in what will be committed) <!-- (コミットされる内容に含めるには「git add <file>...」を使用します) README.md -->
+        README.md <!-- この時、README.mdは赤色。赤色は登録されていない状態 -->
+    
+        nothing added to commit but untracked files present (use "git add" to track)
+        tamurakasumi@kasuminoMacBook-Air php % git add . <!-- git addでワーキングツリーからインデックス内にファイルを登録する。＝ステージングエリアに反映させる。 -->
+        tamurakasumi@kasuminoMacBook-Air php % git status <!-- 状況確認 -->
+        On branch main
+        Your branch is up to date with 'origin/main'.
+    
+        Changes to be committed:
+        (use "git restore --staged <file>..." to unstage)
+            new file: README.md <!-- これで新たに登録された！ この行は登録されたことを表す緑色になる。 -->
+    
+            tamurakasumi@kasuminoMacBook-Air php % git commit -m "README作成" <!-- git commit -m "README作成"へ飛ぶように修正＝コミットする。 -->
+            [main 2ff5525] README作成
+            1 file changed, 0 insertions(+), 0 deletions(-)
+            create mode 100644 README.md
+            tamurakasumi@kasuminoMacBook-Air php % git status <!-- 状況確認 -->
+            On branch main
+            Your branch is ahead of 'origin/main' by 1 commit.
+            (use "git push" to publish your local commits)
+    
+            nothing to commit, working tree clean
+            tamurakasumi@kasuminoMacBook-Air php % git push origin main <!-- git push origin mainでリモートリポジトリにプッシュ -->
+            Enumerating objects: 12, done.
+            Counting objects: 100% (12/12), done.
+            Delta compression using up to 8 threads
+            Compressing objects: 100% (10/10), done.
+            Writing objects: 100% (12/12), 1.35 KiB | 1.35 MiB/s, done.
+            Total 12 (delta 0), reused 9 (delta 0), pack-reused 0
+            To github.com:tamurakasumi/php.git
+            * [new branch] main -> main <!-- これでプッシュされてブランチがつく -->
+            tamurakasumi@kasuminoMacBook-Air php % git add . <!-- git add で登録 -->
+            tamurakasumi@kasuminoMacBook-Air php % git commit -m "README修正" <!-- README作成からREADME修正に修正（変更） -->
+            [main bab6990] README修正
+            1 file changed, 9 insertions(+)
+            tamurakasumi@kasuminoMacBook-Air php % git push origin main <!-- プッシュ -->
+            Enumerating objects: 5, done.
+            Counting objects: 100% (5/5), done.
+            Delta compression using up to 8 threads
+            Compressing objects: 100% (3/3), done.
+            Writing objects: 100% (3/3), 410 bytes | 410.00 KiB/s, done.
+            Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+            To github.com:tamurakasumi/php.git
+            2ff5525..bab6990 main -> main <!-- プッシュされたのでVSコード上でREADME修正の内容変更 -->
+            tamurakasumi@kasuminoMacBook-Air php % git add . <!-- ステージングエリア反映 -->
+            tamurakasumi@kasuminoMacBook-Air php % git commit -m "README修正" <!-- コミット -->
+            [main f896604] README修正
+            1 file changed, 3 insertions(+), 3 deletions(-)
+            tamurakasumi@kasuminoMacBook-Air php % git push origin main <!-- プッシュ -->
+            Enumerating objects: 5, done.
+            Counting objects: 100% (5/5), done.
+            Delta compression using up to 8 threads
+            Compressing objects: 100% (3/3), done.
+            Writing objects: 100% (3/3), 413 bytes | 413.00 KiB/s, done.
+            Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+            To github.com:tamurakasumi/php.git
+            bab6990..f896604 main -> main <!-- プッシュ完了したのでVSコードのREADME修正内容の変更 -->
+            tamurakasumi@kasuminoMacBook-Air php % git add . <!-- ステージングエリア反映 -->
+            tamurakasumi@kasuminoMacBook-Air php % git commit -m "README修正" <!-- コミット -->
+            [main f123d5f] README修正
+            1 file changed, 1 insertion(+), 1 deletion(-)
+            tamurakasumi@kasuminoMacBook-Air php % git push origin main <!-- リモートリポジトリにプッシュ -->
+            Enumerating objects: 5, done.
+            Counting objects: 100% (5/5), done.
+            Delta compression using up to 8 threads
+            Compressing objects: 100% (3/3), done.
+            Writing objects: 100% (3/3), 361 bytes | 361.00 KiB/s, done.
+            Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+            remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+            To github.com:tamurakasumi/php.git
+            f896604..f123d5f main -> main <!-- プッシュ完了 -->
+            tamurakasumi@kasuminoMacBook-Air php %
+            tamurakasumi@kasuminoMacBook-Air php % git branch -a <!-- 全てのブランチ一覧の確認 -->
+            * main <!-- アスタリスク以降緑色＝現在使用されているブランチ -->
+            remotes/origin/HEAD -> origin/main <!-- remotes/origin/HEADと下の行remotes/origin/mainは赤色＝ブランチがリモートになっているブランチ -->
+            remotes/origin/main
+            tamurakasumi@kasuminoMacBook-Air php %
+
+    ブランチを切り替える(チェックアウト)
+    $ git checkout ブランチ名 <!-- 左記でチェクアウトできる。 -->
+
+    チェックアウトはブランチ作成も同時にすることができる。
+    $ git checkout -b ブランチ名 <!-- 基本的にはfeatureブランチの作成は、作成後すぐに切り替えることがほとんどなので、git checkoutコマンドで作成する方が手間が省けます。 -->
+
+    ブランチをリモートにプッシュする
+    $ git push origin ブランチ名
+
+    $ git push origin HEAD <!-- ブランチ名の変わりにHEADを活用することもできます。 HEADとは、直訳すると「頭」という意味で、直前のコミットに対して紐付けられます. -->
+
+    プルリクエストを送る
+    プルリクエストを送る時は、GitHub のリモートリポジトリが格納されているページを開きます。
+    Pull requests > New pull request > ブランチの選択 > Create pull request の順に操作します。
+
+    マージする
+    マージをする時も、GitHub のリモートリポジトリが格納されているページを開きます。
+    個人開発の時は、プルリクエストとセットでやってしまうの良いでしょう。
+    Compare & pull request > View pull request > Merge pull request > Confirm merge の順に操作します。
+    紫色で、Mergedとなっていればマージ成功です。
+        マージをすると、自動的にコードが統合されますが、なんらかの原因で自動的に統合できなことをコンフリクトといいます。 COACHTECHでの個人開発では、コンフリクトが起こることは想定されていないので、説明はしません。
+        しかし、実際の開発現場では多々あることなので、興味のある方は調べてみましょう。
+    
+    featureブランチの削除
+    マージが成功すると、以下の画像のようなdelete branchボタンが出てきます。 delete branchボタンを押すと、マージ済みのブランチを削除することができます。
+    featureブランチは、マージ後に削除してしまうのが一般的です。 削除する理由として、開発中のfeatureブランチだけが残るのでわかりやすいという点があります。
+    しかし、個人や小規模であれば、邪魔にならないので無理に消す必要もありません。
+    削除する時は、ある程度まとめて整理したい時などに消してしまうのが良いです。
+
+    リモートリポジトリの編集情報を取得する
+    $ git fetch
+
+    リモートリポジトリの変更を反映させる
+    $ git pull origin ブランチ
+    また、現在使用しているブランチの上であれば、git pullコマンドに何もつけなくても現在使用しているブランチをpullすることが可能です。
+    小規模な個人開発では、mainブランチのみの更新になるので、mainにチェックアウトしてプルするようにすると良いです。
+    $ git checkout main <!-- mainのpull -->
+    $ git pull
+
+
+
+</body>
+</html>
